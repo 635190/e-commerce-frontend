@@ -1,12 +1,14 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Avatar, Button, Menu, MenuItem } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
 import { navigation } from './NavigationData';
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import AuthModal from '../../Auth/AuthModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser, logout } from '../../../State/Auth/Action'
 
 
 
@@ -17,27 +19,30 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const [open, setOpen] = useState(false)
-  const navigate=useNavigate()
-
+  const navigate = useNavigate()
+  const { auth } = useSelector(store => store)
+  const jwt = localStorage.getItem("jwt")
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAuthModal, setopenAuthModal] = useState(false);
+  const dispatch = useDispatch();
+  const location=useLocation();
 
   const handleUserClick = (event) => {
-    // setOpenUserMenu(!openUserMenu);
+    setOpenUserMenu(!openUserMenu);
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleCloseUserMenu = (event) => {
     setAnchorEl(null);
-    // setOpenUserMenu(false);
+    setOpenUserMenu(false);
   };
 
   const handleCategoryClick = (category, section, item, close) => {
-      navigate(`/${category.id}/${section.id}/${item.id}`)
+    navigate(`/${category.id}/${section.id}/${item.id}`)
     close();
   }
-  
+
   // Define handleOpen function
   const handleOpen = () => {
     setopenAuthModal(true);
@@ -45,6 +50,27 @@ export default function Navigation() {
 
   const handleClose = () => {
     setopenAuthModal(false);
+  }
+
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt))
+    }
+  }, [jwt, auth.jwt])
+
+  useEffect(() => {
+    if(auth.user){
+      handleClose();
+    }
+    if(location.pathname==="/login" || location.pathname==="/register"){
+      navigate(-1);
+    }
+  }, [auth.user])
+
+  const handleLogout=()=>{
+    dispatch(logout());
+    handleCloseUserMenu();  
   }
 
   return (
@@ -327,21 +353,21 @@ export default function Navigation() {
 
               <div className='ml-auto flex items-center'>
                 <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
-                  {false ? (
+                  {auth.user?.firstName ? (
                     <div>
                       <Avatar
                         className="text-white"
                         onClick={handleUserClick}
-                        aria-controls={openUserMenu ? 'basic-menu' : undefined}
+                        aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
-                        aria-expanded={openUserMenu ? 'true' : undefined}
+                        aria-expanded={open ? 'true' : undefined}
                         sx={{
                           bgcolor: deepPurple[500],
                           color: 'white',
                           cursor: 'pointer',
                         }}
                       >
-                        P
+                        {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
 
 
@@ -358,10 +384,10 @@ export default function Navigation() {
                           profile
                         </MenuItem>
 
-                        <MenuItem onClick={()=>navigate("/account/order")}>
+                        <MenuItem onClick={() => navigate("/account/order")}>
                           My Orders
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={handleLogout}>
                           Logout
                         </MenuItem>
                       </Menu>
