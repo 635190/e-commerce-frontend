@@ -10,7 +10,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const dispatch=useDispatch();
     const jwt=localStorage.getItem("jwt");
-    const { auth }=useSelector(Store=>store);
+    const { auth }=useSelector(store=>store);
 
 
     useEffect(()=>{
