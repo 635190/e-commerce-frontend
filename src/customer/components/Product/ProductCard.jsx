@@ -3,9 +3,14 @@ import "./ProductCard.css"
 import { useNavigate } from 'react-router-dom'
 
 const ProductCard = ({ product }) => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
+
+  const handleNavigate=()=>{
+    navigate(`/product/${product?._id}`)
+  }
+
   return (
-<div onClick={() => navigate(`/product/${2}`)} className='productCard w-[15rem] m-3 transition-all cursor-pointer'>
+    <div onClick={handleNavigate} className='productCard w-[15rem] m-3 transition-all cursor-pointer'>
       <div className='h-[20rem]'>
         <img className='h-full w-full object-cover object-left-top' src={product.imageUrl} alt="" />
       </div>
@@ -26,6 +31,6 @@ const ProductCard = ({ product }) => {
     </div>
   )
 }
-console.log("ProductCard",ProductCard)
+console.log("ProductCard", ProductCard)
 
 export default ProductCard
