@@ -33,7 +33,7 @@ export default function Product() {
   const colorValue=searchParams.get("color");
   const sizeValue=searchParams.get("size");
   const priceValue=searchParams.get("price");
-  const disccount=searchParams.get("disccount");
+  const disccount=searchParams.get("discountPercent");
   const sortValue=searchParams.get("sort");
   const pageNumber=searchParams.get("page");
   const stock=searchParams.get("stock");

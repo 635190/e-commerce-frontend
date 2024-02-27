@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
         <div className='flex item-center space-x-2'>
           <p className=' font-semibold'>{product.discountedPrice}</p>
           <p className=' line-through opacity-70'>{product.price}</p>
-          <p className=' text-green-600 font-semibold'>{product.discountPersent}% off</p>
+          <p className=' text-green-600 font-semibold'>{product.discountPercent}% off</p>
         </div>
 
       </div>
@@ -26,5 +26,6 @@ const ProductCard = ({ product }) => {
     </div>
   )
 }
+console.log("ProductCard",ProductCard)
 
 export default ProductCard
