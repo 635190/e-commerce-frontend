@@ -23,17 +23,23 @@ export const createOrder=(reqData)=>async(dispatch)=>{
 };
 
 
-export const getOrderById=(reqData)=>async(dispatch)=>{
-    dispatch({type:GET_ORDER_BY_ID_REQUEST});
+
+export const getOrderById = (orderId) => async (dispatch) => {
+    dispatch({ type: GET_ORDER_BY_ID_REQUEST });
     try {
-        const {data}=await api.get(`/api/orders/${orderId}`,);
+        const response = await api.get(`/api/orders/${orderId}`);
 
-        console.log("Order by id -",data);
+        console.log("Response:", response); // Log the entire response for debugging
 
-        dispatch({type:GET_ORDER_BY_ID_SUCCESS,payload:data,});
-
+        if (response.data) {
+            console.log("Order by ID:", response.data);
+            dispatch({ type: GET_ORDER_BY_ID_SUCCESS, payload: response.data });
+        } else {
+            console.error("Error: Received undefined or null data");
+            dispatch({ type: GET_ORDER_BY_ID_FAILURE, payload: "Received undefined or null data" });
+        }
     } catch (error) {
-        console.log("catch error :",error);
-        dispatch({type:GET_ORDER_BY_ID_FAILURE,payload:error.message});
+        console.error("Error fetching order by ID:", error);
+        dispatch({ type: GET_ORDER_BY_ID_FAILURE, payload: error.message });
     }
 };
