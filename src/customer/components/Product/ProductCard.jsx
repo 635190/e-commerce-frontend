@@ -31,6 +31,4 @@ const ProductCard = ({ product }) => {
     </div>
   )
 }
-console.log("ProductCard", ProductCard)
-
 export default ProductCard

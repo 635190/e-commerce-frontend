@@ -76,12 +76,8 @@ export default function ProductDetails() {
   const dispatch=useDispatch()
   const {products}=useSelector(store=>store)
 
-
-  console.log("------",params.productId);
-
   const handleAddToCart=()=>{
     const data={productId:params.productId,size:selectedSize.name}
-    console.log("data",data)
     dispatch(addItemToCart(data))
     navigate("/cart")
   } 

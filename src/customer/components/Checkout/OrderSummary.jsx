@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { getOrderById } from '../../../State/Order/Action'
 import { store } from '../../../State/Store'
+import { createPayment } from '../../../State/Payment/Action'
 
 const OrderSummary = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,10 @@ const OrderSummary = () => {
         dispatch(getOrderById(orderId))
     }, [orderId])
     console.log("orderId", orderId)
+
+    const handleCheckout=()=>{
+        dispatch(createPayment(orderId))
+    }
 
     return (
         <div>
@@ -69,7 +74,7 @@ const OrderSummary = () => {
 
                             </div>
 
-                            <Button variant='contained' className=' w-full' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#7d4adb" }}>
+                            <Button variant='contained' className=' w-full' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#7d4adb" }} onClick={handleCheckout}>
                                 Checkout
                             </Button>
                         </div>
