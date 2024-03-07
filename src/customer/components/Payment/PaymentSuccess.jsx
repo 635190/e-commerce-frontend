@@ -52,7 +52,7 @@ const PaymentSuccess = () => {
                     <Grid container item className="" sx={{ alignItems: "center", justifyContent: "space-between" }}>
                         <Grid item xs={6}>
                             <div className="flex items-center">
-                                <img className="w-[5rem] h-[5rem] object-cover object-top" src="" alt="" />
+                                <img className="w-[5rem] h-[5rem] object-cover object-top" src={item.product.imageUrl} alt="" />
                                 <div className="ml-5 space-y-2">
                                     <p>{item.product.title}</p>
                                     <div className="opacity-50 text-xs font-semibold">
