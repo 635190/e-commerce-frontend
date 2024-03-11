@@ -77,5 +77,3 @@ const HomeSectionCarosel = ({data,sectionName}) => {
 };
 
 export default HomeSectionCarosel;
-
-
