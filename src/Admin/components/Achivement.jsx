@@ -19,7 +19,7 @@ const TrophyImg=styled("img")({
 
 const Achivement = () => {
   return (
-    <Card sx={{position:"relative",bgcolor:"rgb(51, 51, 51)",color:"white"}}>
+    <Card sx={{position:"relative"}}>
         <CardContent>
             <Typography variant='h6' sx={{letterSpacing:".25px"}}>
                 Shop With Parth
