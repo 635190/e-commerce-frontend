@@ -1,4 +1,4 @@
-[
+export const men_shirt = [
     {
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/k4d27ww0/shirt/q/w/t/l-el024-el-senor-original-imafnadnjp5pq6tg.jpeg?q=70",
         "brand": "El Senor",
