@@ -26,7 +26,7 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAuthModal, setopenAuthModal] = useState(false);
   const dispatch = useDispatch();
-  const location=useLocation();
+  const location = useLocation();
 
   const handleUserClick = (event) => {
     setOpenUserMenu(!openUserMenu);
@@ -61,17 +61,17 @@ export default function Navigation() {
   }, [jwt, auth.jwt])
 
   useEffect(() => {
-    if(auth.user){
+    if (auth.user) {
       handleClose();
     }
-    if(location.pathname==="/login" || location.pathname==="/register"){
+    if (location.pathname === "/login" || location.pathname === "/register") {
       navigate(-1);
     }
   }, [auth.user])
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     dispatch(logout());
-    handleCloseUserMenu();  
+    handleCloseUserMenu();
   }
 
   return (
@@ -187,11 +187,75 @@ export default function Navigation() {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
-                    </a>
+                  <div className='ml-auto flex items-center'>
+                    <div className='lg:hidden'>
+                      {/* Show Signin button on mobile screens */}
+                      {auth.user?.firstName ? (
+                        <Avatar
+                          className="text-white"
+                          onClick={handleUserClick}
+                          aria-controls={open ? 'basic-menu' : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          sx={{
+                            bgcolor: deepPurple[500],
+                            color: 'white',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {auth.user?.firstName[0].toUpperCase()}
+                        </Avatar>
+                      ) : (
+                        <Button
+                          onClick={handleOpen}
+                          className='text-sm font-medium text-gray-700 hover:text-gray-800'
+                        >
+                          Signin
+                        </Button>
+                      )}
+                    </div>
+                    <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
+                      {/* Show user avatar and menu on larger screens */}
+                      {auth.user?.firstName && (
+                        <div>
+                          <Avatar
+                            className="text-white"
+                            onClick={handleUserClick}
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            sx={{
+                              bgcolor: deepPurple[500],
+                              color: 'white',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {auth.user.firstName[0].toUpperCase()}
+                          </Avatar>
+                          <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={openUserMenu}
+                            onClose={handleCloseUserMenu}
+                            MenuListProps={{
+                              'aria-labelledby': 'basic-menu',
+                            }}
+                          >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                              Profile
+                            </MenuItem>
+                            <MenuItem onClick={() => navigate("/account/order")}>
+                              My Orders
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>
+                              Logout
+                            </MenuItem>
+                          </Menu>
+                        </div>
+                      )}
+                    </div>
                   </div>
+
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
